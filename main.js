@@ -30,7 +30,7 @@ numberButtons.forEach(button =>{
   })
 })
 
-
+// Operator logic
 operatorButtons.forEach(button =>{
   button.addEventListener('click', () =>{
     operator = button.innerHTML
@@ -39,48 +39,55 @@ operatorButtons.forEach(button =>{
     if (firstOperand == '')
       return
     firstOperand = ''
-    displayClear
+    displayClear()
     console.log(`First operand is now ${firstOperand}`)
     console.log(`Second operand is now ${secondOperand}`)
 
   })
 })
 
+// Equals logic
+equalsButton.addEventListener('click', () =>{
+  console.log('Equal Button Clicked')
+  operate(operator, firstOperand, secondOperand);
+  document.getElementById('display').value = result;
+})
 
 // Defines basic operations
-const add = function(arg1, arg2) {
-	return(arg1 + arg2 );
+const add = function(firstOperand, secondOperand) {
+	return(firstOperand + secondOperand );
 };
 
-const subtract = function(arg1, arg2) {
-  return(arg1 - arg2)
+const subtract = function(firstOperand, secondOperand) {
+  return(firstOperand - secondOperand)
 };
 
-const multiply = function(arg1, arg2) {
-  return(arg1 * arg2)
+const multiply = function(firstOperand, secondOperand) {
+  return(firstOperand * secondOperand)
 };
 
-const divide = function(arg1, arg2) {
-  return(arg1 / arg2)
+const divide = function(firstOperand, secondOperand) {
+  return(firstOperand / secondOperand)
 };
 
 // Main logic for operations and inputs
-const operate = function(operator, arg1, arg2){
-    let result;
+const operate = function(operator, firstOperand, secondOperand){
+    num1 = parseFloat(firstOperand);
+    num2 = parseFloat(secondOperand);
     if (operator === '+'){
-        result = add(arg1, arg2);
+        result = add(num1, num2);
         return result
     }
-    if (operator === subtract){
-        result = subtract(arg1, arg2);
+    if (operator === '-'){
+        result = subtract(num1, num2);
         return result
     }
-    if (operator === multiply){
-        result = multiply(arg1, arg2);
+    if (operator === '*'){
+        result = multiply(num1, num2);
         return result
     }
-    if (operator === divide){
-        result = divide(arg1, arg2);
+    if (operator === '/'){
+        result = divide(num1, num2);
         return result
     }
     else{
