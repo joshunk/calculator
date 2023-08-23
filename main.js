@@ -33,12 +33,39 @@ numberButtons.forEach(button =>{
 // Operator logic
 operatorButtons.forEach(button =>{
   button.addEventListener('click', () =>{
+    
+    
+    // First instance    
+    if (previousOperand === ''){
+      console.log("OINK!")
+      previousOperand = currentOperand;
+      currentOperand = '';
+    }
+    
+    // //Check for previous result
+    // if (result > 0){
+    //   console.log("MOO!")
+    //   previousOperand = result;
+    // }
+    
+    //This should run if there's a current operand and an operator already selected...
+    if (currentOperand > 0 && previousOperand > 0 && operator != ''){
+      console.log("QUACK!")
+      operate(operator, currentOperand, previousOperand);
+      document.getElementById('display').value = result;
+    }
+    
     operator = button.innerHTML
+
+    //Only assign the value once, so that multiple operator clicks don't break it.
+    // if (currentOperand > 0 && previousOperand == 0){
+    //   previousOperand = currentOperand
+    // }
+
     console.log(`Operator is now ${operator}`)
-    previousOperand = currentOperand
-    if (currentOperand == '')
-      return
-    currentOperand = ''
+    // currentOperand = ''
+    // if (currentOperand == '')
+    //   return
     displayClear()
     console.log(`Current operand is now ${currentOperand}`)
     console.log(`Previous operand is now ${previousOperand}`)
@@ -71,28 +98,34 @@ const divide = function(previousOperand, currentOperand) {
 };
 
 // Main logic for operations and inputs
-const operate = function(operator, currentOperand, previousOperand){
-    previousOperand = parseFloat(previousOperand);
-    currentOperand = parseFloat(currentOperand);
+const operate = function(operator, num1, num2){
+    num2 = parseFloat(num2);
+    num1 = parseFloat(num1);
     if (operator === '+'){
-        result = add(previousOperand, currentOperand);
+        result = add(num2, num1);
         // return result
     }
     if (operator === '-'){
-        result = subtract(previousOperand, currentOperand);
+        result = subtract(num2, num1);
         // return result
     }
     if (operator === '*'){
-        result = multiply(previousOperand, currentOperand);
+        result = multiply(num2, num1);
         // return result
     }
-    if (operator === '/'){
-        result = divide(previousOperand, currentOperand);
+    if (operator === '/' && num1 > 0){
+        result = divide(num2, num1);
         // return result
     }
+    if (operator === '/' && num1 == 0){
+      alert("You can't divide by 0! The universe will implode!")
+      return;
+    };
+    result = parseFloat(result.toFixed(3));
+    previousOperand = result;
+    currentOperand = '';
+    document.querySelector('#display').value = previousOperand;
     console.log(`Result: ${result}`);
-    console.log(`Current operand is now ${currentOperand}`);
-    console.log(`Previous operand is now ${previousOperand}`);
   }
 
 // Event listenener to add button content to text input
@@ -116,6 +149,8 @@ document.querySelector('#buttons')
     document.getElementById('display').value = "";
     currentOperand = ''
     previousOperand = ''
+    operator = ''
+    result = ''
     updateDisplay
   }
   
