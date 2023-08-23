@@ -5,6 +5,8 @@ const clearButton = document.querySelector('#clear')
 const display = document.querySelector('#display')
 let firstOperand = ''
 let secondOperand = ''
+let result = '0'
+let operator = ''
 
 function appendNumber(number){
   firstOperand += number
@@ -31,13 +33,15 @@ numberButtons.forEach(button =>{
 
 operatorButtons.forEach(button =>{
   button.addEventListener('click', () =>{
+    operator = button.innerHTML
+    console.log(`Operator is now ${operator}`)
     secondOperand = firstOperand
     if (firstOperand == '')
       return
     firstOperand = ''
+    displayClear
     console.log(`First operand is now ${firstOperand}`)
     console.log(`Second operand is now ${secondOperand}`)
-    displayClear
 
   })
 })
@@ -50,7 +54,6 @@ const add = function(arg1, arg2) {
 
 const subtract = function(arg1, arg2) {
   return(arg1 - arg2)
-	
 };
 
 const multiply = function(arg1, arg2) {
@@ -64,7 +67,7 @@ const divide = function(arg1, arg2) {
 // Main logic for operations and inputs
 const operate = function(operator, arg1, arg2){
     let result;
-    if (operator === add){
+    if (operator === '+'){
         result = add(arg1, arg2);
         return result
     }
