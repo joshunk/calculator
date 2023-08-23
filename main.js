@@ -3,30 +3,30 @@ const operatorButtons = document.querySelectorAll('.operators')
 const equalsButton = document.querySelector('.equals')
 const clearButton = document.querySelector('#clear')
 const display = document.querySelector('#display')
-let firstOperand = ''
-let secondOperand = ''
+let currentOperand = ''
+let previousOperand = ''
 let result = '0'
 let operator = ''
 
 function appendNumber(number){
-  firstOperand += number
+  currentOperand += number
 }
 
 function updateDisplay(){
-  firstOperand.innerText = firstOperand;
+  currentOperand.innerText = currentOperand;
 }
 
 function displayClear(){
   document.getElementById('display').value = "";
 }
 
-//add numbers to the firstOperand
+//add numbers to the currentOperand
 numberButtons.forEach(button =>{
   button.addEventListener('click', () =>{
     appendNumber(button.innerText)
     updateDisplay
-    console.log(`First operand is now ${firstOperand}`)
-    console.log(`Second operand is now ${secondOperand}`)
+    console.log(`Current operand is now ${currentOperand}`)
+    console.log(`Previous operand is now ${previousOperand}`)
   })
 })
 
@@ -35,13 +35,13 @@ operatorButtons.forEach(button =>{
   button.addEventListener('click', () =>{
     operator = button.innerHTML
     console.log(`Operator is now ${operator}`)
-    secondOperand = firstOperand
-    if (firstOperand == '')
+    previousOperand = currentOperand
+    if (currentOperand == '')
       return
-    firstOperand = ''
+    currentOperand = ''
     displayClear()
-    console.log(`First operand is now ${firstOperand}`)
-    console.log(`Second operand is now ${secondOperand}`)
+    console.log(`Current operand is now ${currentOperand}`)
+    console.log(`Previous operand is now ${previousOperand}`)
 
   })
 })
@@ -49,50 +49,50 @@ operatorButtons.forEach(button =>{
 // Equals logic
 equalsButton.addEventListener('click', () =>{
   console.log('Equal Button Clicked')
-  operate(operator, firstOperand, secondOperand);
+  operate(operator, currentOperand, previousOperand);
   document.getElementById('display').value = result;
 })
 
 // Defines basic operations
-const add = function(firstOperand, secondOperand) {
-	return(firstOperand + secondOperand );
+const add = function(previousOperand, currentOperand) {
+	return(previousOperand + currentOperand );
 };
 
-const subtract = function(firstOperand, secondOperand) {
-  return(firstOperand - secondOperand)
+const subtract = function(previousOperand, currentOperand) {
+  return(previousOperand - currentOperand)
 };
 
-const multiply = function(firstOperand, secondOperand) {
-  return(firstOperand * secondOperand)
+const multiply = function(previousOperand, currentOperand) {
+  return(previousOperand * currentOperand)
 };
 
-const divide = function(firstOperand, secondOperand) {
-  return(firstOperand / secondOperand)
+const divide = function(previousOperand, currentOperand) {
+  return(previousOperand / currentOperand)
 };
 
 // Main logic for operations and inputs
-const operate = function(operator, firstOperand, secondOperand){
-    num1 = parseFloat(firstOperand);
-    num2 = parseFloat(secondOperand);
+const operate = function(operator, currentOperand, previousOperand){
+    previousOperand = parseFloat(previousOperand);
+    currentOperand = parseFloat(currentOperand);
     if (operator === '+'){
-        result = add(num1, num2);
-        return result
+        result = add(previousOperand, currentOperand);
+        // return result
     }
     if (operator === '-'){
-        result = subtract(num1, num2);
-        return result
+        result = subtract(previousOperand, currentOperand);
+        // return result
     }
     if (operator === '*'){
-        result = multiply(num1, num2);
-        return result
+        result = multiply(previousOperand, currentOperand);
+        // return result
     }
     if (operator === '/'){
-        result = divide(num1, num2);
-        return result
+        result = divide(previousOperand, currentOperand);
+        // return result
     }
-    else{
-        console.log("It's broken.")
-    }
+    console.log(`Result: ${result}`);
+    console.log(`Current operand is now ${currentOperand}`);
+    console.log(`Previous operand is now ${previousOperand}`);
   }
 
 // Event listenener to add button content to text input
@@ -114,8 +114,8 @@ document.querySelector('#buttons')
   
   function clearField(){
     document.getElementById('display').value = "";
-    firstOperand = ''
-    secondOperand = ''
+    currentOperand = ''
+    previousOperand = ''
     updateDisplay
   }
   
